@@ -10,6 +10,9 @@
 </p>
 
 ## About the library
-The library contains a class for encrypting and decrypting messages with the specified key
+The library contains a class for encrypting and decrypting messages with the specified key using a cipher "rail-fence". About cipher: https://en.wikipedia.org/wiki/Rail_fence_cipher
 
-
+## Class RailFence: 
+Methods: 
+- encode(String message, int key) - return encoded message with a cipher "Rail-Fence" with the specified key.
+- decode(String message, int key) - return decoded message with a cipher "Rail-Fence" with the specified key.
