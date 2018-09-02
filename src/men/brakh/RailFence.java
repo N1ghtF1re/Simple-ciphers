@@ -9,19 +9,19 @@ package men.brakh;
 public class RailFence implements Cipher  {
 
     /**
-     * The method determines at what distance the next symbol is at the same "height"
-     * Example:
-     * 1     7        13
-     *  2   6 8     12  ...
-     *   3 5   9  11
-     *    4     10
-     * 2,6,8,12 are at the same height, but distance between 2 and 6 = 4 chars, between 6 and 8 = 2
+     * The method determines at what distance the next symbol is at the same "height".                             <br>
+     * Example:                                                                                                    <br>
+     * 1     7        13                                                                                           <br>
+     *  2   6 8     12  ...                                                                                        <br>
+     *   3 5   9  11                                                                                               <br>
+     *    4     10                                                                                                 <br>
+     * 2,6,8,12 are at the same height, but distance between 2 and 6 = 4 chars, between 6 and 8 = 2                <br>
      * Method takes this into account
      *
-     * @param iteration - The number of the current character in the line at one "height"
-     * @param row - The number of current
-     * @param size - The number of rows (key)
-     * @return - distance the next symbol is at the same "height"
+     * @param iteration  The number of the current character in the line at one "height"
+     * @param row  The number of current
+     * @param size  The number of rows (key)
+     * @return Distance the next symbol is at the same "height"
      */
     private int getTerm(int iteration, int row, int size) {
         if((row == 0) || (row == size-1)) { // Max. distance is achieved at the ends and equally (size-1)*2
@@ -35,11 +35,11 @@ public class RailFence implements Cipher  {
     }
 
     /**
-     * The method encodes messages with a cipher "Rail-Fence" with the specified key
+     * The method encodes messages with a cipher "Rail-Fence" with the specified key.
      *
-     * @param message - Plaintext, which should be encrypted
-     * @param key - key (The number of "rails" (rows))
-     * @return - Encoded message
+     * @param message Plaintext, which should be encrypted
+     * @param key key (The number of "rails" (rows))
+     * @return Encoded message
      * @see RailFence#getTerm(int, int, int)
      */
     @Override
@@ -63,32 +63,34 @@ public class RailFence implements Cipher  {
     }
 
     /**
-     * The method decodes messages with a cipher "Rail-Fence" with the specified key
-     *
-     * Decode algorithm (example):
-     * Ciphertext = cgroryytahpp
-     *
-     * At rows it:
-     * ?     ?
-     *  ?   ? ?   ?
-     *   ? ?   ? ?
-     *    ?     ?
-     * characters №0, №1 in a source ciphertext - characters №0 and №0+6 (is obtained by {@link RailFence#getTerm(int, int, int)}) in decoded text
+     * The method decodes messages with a cipher "Rail-Fence" with the specified key.                              <br>
+     *                                                                                                             <br>
+     * Decode algorithm (example):                                                                                 <br>
+     * <b>Ciphertext</b> = cgroryytahpp                                                                            <br>
+     *                                                                                                             <br>
+     * At rows it:                                                                                                 <br>
+     * ?     ?                                                                                                     <br>
+     *  ?   ? ?   ?                                                                                                <br>
+     *   ? ?   ? ?                                                                                                 <br>
+     *    ?     ?                                                                                                  <br>
+     * characters №0, №1 in a source ciphertext - characters №0 and №0+6 (is obtained by
+     * {@link RailFence#getTerm(int, int, int)}) in decoded text
      * I.e. char "c" in ciphertext - char №0 in a decoded string, "g" - №6
      *
-     * с?????g?????
+     * <br><i> с?????g????? </i><br>
      *
-     * characters №2, №3, №4, №5 in a source ciphertext - characters №1 and №1+4, №1+4+2, №1+4+2+4 (is obtained by {@link RailFence#getTerm(int, int, int)}) in decoded text
+     * characters №2, №3, №4, №5 in a source ciphertext - characters №1 and №1+4, №1+4+2, №1+4+2+4
+     * (is obtained by {@link RailFence#getTerm(int, int, int)}) in decoded text                                   <br>
      * I.e. char "r" in ciphertext - char №1 in a decoded string, "o" - №5, ...
-     * cr???ogr???y
+     * <br><i> cr???ogr???y </i><br>
      *
      * And so on...
      *
      *
-     * @param message - Ciphertext, width should be decrypted
-     * @param key - key (The number of "rails" (rows))
+     * @param message Ciphertext, width should be decrypted
+     * @param key key (The number of "rails" (rows))
      * @see RailFence#getTerm(int, int, int)
-     * @return - Decoded message
+     * @return Decoded message
      */
     @Override
     public String decode(String message, int key) {
