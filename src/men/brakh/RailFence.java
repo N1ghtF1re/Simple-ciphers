@@ -24,6 +24,9 @@ public class RailFence implements Cipher  {
      * @return Distance the next symbol is at the same "height"
      */
     private int getTerm(int iteration, int row, int size) {
+        if ((size == 0) || (size == 1)) {
+            return 1;
+        }
         if((row == 0) || (row == size-1)) { // Max. distance is achieved at the ends and equally (size-1)*2
             return (size-1)*2;
         }
