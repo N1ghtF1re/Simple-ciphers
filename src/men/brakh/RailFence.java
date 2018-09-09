@@ -45,10 +45,11 @@ public class RailFence implements Cipher  {
      * @return Encoded message
      * @see RailFence#getTerm(int, int, int)
      */
-    @Override
     public String encode(String message, int key) {
         if (key < 0) {
             throw new ArithmeticException("Negative key value");
+        } else if (key == 0) {
+            key = 1;
         }
         String encodedMessage = "";
 
@@ -95,7 +96,6 @@ public class RailFence implements Cipher  {
      * @see RailFence#getTerm(int, int, int)
      * @return Decoded message
      */
-    @Override
     public String decode(String message, int key) {
         if (key < 0) {
             throw new ArithmeticException("Negative key value");
@@ -112,5 +112,15 @@ public class RailFence implements Cipher  {
         }
 
         return decodedMessage.toString();
+    }
+
+    @Override
+    public String encode(String message, String key) {
+        return encode(message, Integer.parseInt(key));
+    }
+
+    @Override
+    public String decode(String message, String key) {
+        return decode(message, Integer.parseInt(key));
     }
 }
