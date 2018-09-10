@@ -1,1 +1,1 @@
-typeSearchIndex = [{"p":"men.brakh","l":"Cipher"},{"p":"men.brakh","l":"Demo"},{"p":"men.brakh","l":"RailFence"}]
+typeSearchIndex = [{"p":"men.brakh","l":"Cipher"},{"p":"men.brakh","l":"Lab1Frame"},{"p":"men.brakh","l":"Lab1Frame.ButtonEventListener"},{"p":"men.brakh","l":"RailFence"},{"p":"men.brakh","l":"RotatingSquare"},{"p":"men.brakh","l":"VigenerCipher"}]
