@@ -16,3 +16,20 @@ The library contains three simple ciphers: rail-fence, rotating square and wizne
 Methods: 
 - encode(String message, int key) - return encoded message with a cipher "Rail-Fence" with the specified key.
 - decode(String message, int key) - return decoded message with a cipher "Rail-Fence" with the specified key.
+
+## Class VigenerCipher: 
+Constructors: 
+- VigenerCipher() - default, RUSSIAN ALPHABET
+- RotatingSquare(int[][] key) - With the assignment the key. The characters are written consecutively by a string. Example: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+Methods: 
+- encode(String message, str keyword) - return encoded message with a Vigener cipher with the specified keyword.
+- decode(String message, str keyword) - return decoded message with a Vigener cipher with the specified keyword.
+
+
+## Class RotatingSquare: 
+Constructors: 
+- RotatingSquare() - default, used default key, key - the array of "holes" in the square of the format [ [x,y], [x,y], ..]. Example: {{0,0}, {3,1}, {2,2}, {1,3}}
+- RotatingSquare(String aplhaber) - With the assignment the basic alphabet. The characters are written consecutively by a string. Example: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+Methods: 
+- encode(String message) - return encoded message with a cipher "Rotating Square".
+- decode(String message) - return decoded message with a cipher "Rotating Square".
