@@ -20,7 +20,7 @@ Methods:
 ## Class VigenerCipher: 
 Constructors: 
 - VigenerCipher() - default, RUSSIAN ALPHABET
-- RotatingSquare(int[][] key) - With the assignment the key. The characters are written consecutively by a string. Example: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+- VigenerCipher(String aplhaber) - With the assignment the alphabet. The characters are written consecutively by a string. Example: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
 
 Methods: 
 - encode(String message, str keyword) - return encoded message with a Vigener cipher with the specified keyword.
@@ -29,8 +29,8 @@ Methods:
 
 ## Class RotatingSquare: 
 Constructors: 
-- RotatingSquare() - default, used default key, key - the array of "holes" in the square of the format [ [x,y], [x,y], ..]. Example: {{0,0}, {3,1}, {2,2}, {1,3}}
-- RotatingSquare(String aplhaber) - With the assignment the basic alphabet. The characters are written consecutively by a string. Example: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+- RotatingSquare() - default, used default key.
+- RotatingSquare(int[][] key) - With the assignment the key, key - the array of "holes" in the square of the format [ [x,y], [x,y], ..]. Example: {{0,0}, {3,1}, {2,2}, {1,3}}
 
 Methods: 
 - encode(String message) - return encoded message with a cipher "Rotating Square".
