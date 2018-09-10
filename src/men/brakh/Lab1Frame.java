@@ -123,13 +123,13 @@ public class Lab1Frame extends JFrame {
                         return;
                     }
                 } else if(radioVigener.isSelected()) {
-                    message += "Key is " + input.getText() + "\n";
+                    message += "Key is " + onlyRus(input.getText()) + "\n";
                     message += "Language: Russian\n";
                     String plaintext = onlyRus(readFile());
                     message += "Plaintext: " + plaintext + "\n";
                     Cipher vigener = new VigenerCipher();
                     try {
-                        ciphertext = vigener.encode(plaintext, input.getText());
+                        ciphertext = vigener.encode(plaintext, onlyRus(input.getText()));
                     } catch (NumberFormatException | ArithmeticException e2)  {
                         dialogMSG("Bad key\nException: " + e2, "Error!");
                         return;
@@ -139,7 +139,13 @@ public class Lab1Frame extends JFrame {
                     message += "Plaintext: " + plaintext + "\n";
                     message += "Language: English\n";
                     RotatingSquare rotatingSquare = new RotatingSquare();
-                    ciphertext = rotatingSquare.encode(plaintext);
+                    try {
+                        ciphertext = rotatingSquare.encode(plaintext);
+                    } catch (StringIndexOutOfBoundsException e2)  {
+                        dialogMSG("Source text does not contain English letters", "Error!");
+                        return;
+                    }
+
                 }
                 writeFile(ciphertext);
                 message += "Ciphertext: " + ciphertext + "\n";
@@ -162,13 +168,13 @@ public class Lab1Frame extends JFrame {
                     }
 
                 } else if(radioVigener.isSelected()) {
-                    message += "Key is " + onlyEng(input.getText()) + "\n";
+                    message += "Key is " + onlyRus(input.getText()) + "\n";
                     String ciphertext = onlyRus(readFile());
                     message += "Ciphertext: " + ciphertext + "\n";
                     message += "Language: Russian\n";
                     Cipher vigener = new VigenerCipher();
                     try {
-                        plaintext = vigener.decode(ciphertext, input.getText());
+                        plaintext = vigener.decode(ciphertext, onlyRus(input.getText()));
                     } catch (NumberFormatException | ArithmeticException e2) {
                         dialogMSG("Bad key\nException: " + e2, "Error!");
                         return;
