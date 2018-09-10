@@ -1,7 +1,7 @@
 package men.brakh;
 
 /**
- * Class Allows you to encrypt and Ciphertext messages using a cipher "rail-fence"
+ * Class Allows you to encrypt and decrypt messages using a cipher "rail-fence"
  * About cipher: https://en.wikipedia.org/wiki/Rail_fence_cipher
  * @author  Pankratiew Alexandr
  * @version  1.0
