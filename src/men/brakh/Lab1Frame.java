@@ -17,6 +17,7 @@ public class Lab1Frame extends JFrame {
     private JRadioButton radioIsEncrypt = new JRadioButton("Encode");
     private JRadioButton radioIsDecrypt = new JRadioButton("Decode");
 
+
     final static String inputFile = "input.txt";
     final static String outputFile = "output.txt";
 
@@ -48,6 +49,9 @@ public class Lab1Frame extends JFrame {
 
     static String onlyEng(String s) {
         return s.replaceAll("[^A-Za-zА]", "").toUpperCase();
+    }
+    static String onlyRus(String s) {
+        return s.replaceAll("[^А-Яа-яёЁА]", "").toUpperCase();
     }
 
     public Lab1Frame() {
@@ -92,42 +96,101 @@ public class Lab1Frame extends JFrame {
         container.add(button);
     }
 
+    void dialogMSG(String message, String title) {
+        JOptionPane.showMessageDialog(null,
+                message,
+                title,
+                JOptionPane.PLAIN_MESSAGE);
+    }
+
     class ButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String message = "";
             if (radioIsEncrypt.isSelected()) {
                 message += "Encrypted\n";
-                message += "Key is " + input.getText() + "\n";
 
                 String ciphertext = "";
-                String plaintext = onlyEng(readFile());
-                message += "Plaintext: " + plaintext + "\n";
                 if (radioRailFence.isSelected()) {
+                    String plaintext = onlyEng(readFile());
+                    message += "Key is " + input.getText() + "\n";
+                    message += "Plaintext: " + plaintext + "\n";
                     message += "Language: English\n";
-                    RailFence railFence = new RailFence();
-                    ciphertext = railFence.encode(plaintext, Integer.parseInt(input.getText()));
-                    writeFile(ciphertext);
+                    Cipher railFence = new RailFence();
+                    try {
+                        ciphertext = railFence.encode(plaintext, Integer.parseInt(input.getText()));
+                    } catch (NumberFormatException | ArithmeticException e2)  {
+                        dialogMSG("Bad key\nException: " + e2, "Error!");
+                        return;
+                    }
+                } else if(radioVigener.isSelected()) {
+                    message += "Key is " + input.getText() + "\n";
+                    message += "Language: Russian\n";
+                    String plaintext = onlyRus(readFile());
+                    message += "Plaintext: " + plaintext + "\n";
+                    Cipher vigener = new VigenerCipher();
+                    try {
+                        ciphertext = vigener.encode(plaintext, input.getText());
+                    } catch (NumberFormatException | ArithmeticException e2)  {
+                        dialogMSG("Bad key\nException: " + e2, "Error!");
+                        return;
+                    }
+                } else if (radioRoatingSquare.isSelected()) {
+                    String plaintext = onlyEng(readFile());
+                    message += "Plaintext: " + plaintext + "\n";
+                    message += "Language: English\n";
+                    RotatingSquare rotatingSquare = new RotatingSquare();
+                    ciphertext = rotatingSquare.encode(plaintext);
                 }
+                writeFile(ciphertext);
                 message += "Ciphertext: " + ciphertext + "\n";
             } else {
                 message += "Decrypted\n";
-                message += "Key is " + onlyEng(input.getText()) + "\n";
 
-                String ciphertext = onlyEng(readFile());
                 String plaintext = "";
-                message += "Ciphertext: " + ciphertext + "\n";
+
                 if (radioRailFence.isSelected()) {
+                    message += "Key is " + onlyEng(input.getText()) + "\n";
+                    String ciphertext = onlyEng(readFile());
+                    message += "Ciphertext: " + ciphertext + "\n";
                     message += "Language: English\n";
-                    RailFence railFence = new RailFence();
-                    plaintext = railFence.decode(ciphertext, Integer.parseInt(input.getText()));
-                    writeFile(plaintext);
+                    Cipher railFence = new RailFence();
+                    try {
+                        plaintext = railFence.decode(ciphertext, Integer.parseInt(input.getText()));
+                    } catch (NumberFormatException | ArithmeticException e2) {
+                        dialogMSG("Bad key\nException: " + e2, "Error!");
+                        return;
+                    }
+
+                } else if(radioVigener.isSelected()) {
+                    message += "Key is " + onlyEng(input.getText()) + "\n";
+                    String ciphertext = onlyRus(readFile());
+                    message += "Ciphertext: " + ciphertext + "\n";
+                    message += "Language: Russian\n";
+                    Cipher vigener = new VigenerCipher();
+                    try {
+                        plaintext = vigener.decode(ciphertext, input.getText());
+                    } catch (NumberFormatException | ArithmeticException e2) {
+                        dialogMSG("Bad key\nException: " + e2, "Error!");
+                        return;
+                    }
+                } else if (radioRoatingSquare.isSelected()) {
+                    String ciphertext = onlyEng(readFile());
+                    message += "Ciphertext: " + ciphertext + "\n";
+                    message += "Language: English\n";
+                    RotatingSquare rotatingSquare = new RotatingSquare();
+                    try {
+                        plaintext = rotatingSquare.decode(ciphertext);
+                    } catch (NumberFormatException | ArithmeticException e2) {
+                        dialogMSG("Bad ciphertext\nException: " + e2, "Error!");
+                        return;
+                    }
+
                 }
+                writeFile(plaintext);
                 message += "Plaintext: " + plaintext + "\n";
             }
-            JOptionPane.showMessageDialog(null,
-                    message,
-                    "Output",
-                    JOptionPane.PLAIN_MESSAGE);
+            dialogMSG(message, "Great!");
+
         }
     }
 
