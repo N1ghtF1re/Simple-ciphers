@@ -1,5 +1,11 @@
 package men.brakh;
 
+/**
+ * Class Allows you to encrypt and decrypt messages using a cipher Vigener Cipher
+ * About cipher: https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
+ * @author  Pankratiew Alexandr
+ * @version  1.0
+ */
 public class VigenerCipher implements Cipher {
     private String alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 
@@ -81,12 +87,5 @@ public class VigenerCipher implements Cipher {
         }
         return plaintext.toString();
     }
-
-
-
-    public static void main(String args[]) {
-        VigenerCipher viegner = new VigenerCipher();
-        System.out.println(viegner.encode("ЁУКАКДЕЛАКАККРУТАШТОСДЕЛАНВИЖНЕРИПОЧТИДОДЕЛАНЧАТ", "Ё"));
-        System.out.println(viegner.decode(viegner.encode("КАКДЕЛАКАККРУТАШТОСДЕЛАНВИЖНЕРИПОЧТИДОДЕЛАНЧАТ", "КАКДЕЛАКАККРУТАШТОСДЕЛАНВИЖНЕРИПОЧТИДОДЕЛАНЧАТ"), "КАКДЕЛАКАККРУТАШТОСДЕЛАНВИЖНЕРИПОЧТИДОДЕЛАНЧАТ"));
-    }
+    
 }
