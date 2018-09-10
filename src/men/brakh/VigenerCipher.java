@@ -87,5 +87,5 @@ public class VigenerCipher implements Cipher {
         }
         return plaintext.toString();
     }
-    
+
 }
