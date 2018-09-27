@@ -46,7 +46,6 @@ public class VigenerCipher implements Cipher {
             int tmp = (getAlphabetIndex(key.charAt(i % (key.length()))) + (i/key.length())) % alphabet.length();
             progrKey.append(alphabet.charAt(tmp));
         }
-
         return progrKey.toString();
     }
 

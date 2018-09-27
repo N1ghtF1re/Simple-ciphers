@@ -9,6 +9,8 @@ import javax.swing.*;
 
 public class Lab1Frame extends JFrame {
     private JButton button = new JButton("To do everything!\n");
+    private JButton btnSelectFile = new JButton("Select input file");
+    private JLabel lblCurrentFile = new JLabel("input.txt");
     private JTextField input = new JTextField("",40);
     private JLabel label = new JLabel("Key:");
     private JRadioButton radioRailFence = new JRadioButton("Rail fence");
@@ -20,6 +22,16 @@ public class Lab1Frame extends JFrame {
 
     final static String inputFile = "input.txt";
     final static String outputFile = "output.txt";
+
+    private static String currentPath = inputFile;
+
+
+    public String trimStr(String str) {
+        if (str.length() > 40) {
+            return str.substring(0, 40) + "...";
+        }
+        return  str;
+    }
 
     public static String readFile(String filename) {
         try {
@@ -44,7 +56,7 @@ public class Lab1Frame extends JFrame {
     }
 
     public static String readFile() {
-        return readFile(inputFile);
+        return readFile(currentPath);
     }
 
     static String onlyEng(String s) {
@@ -60,12 +72,13 @@ public class Lab1Frame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Container container = this.getContentPane();
-        container.setLayout(new FlowLayout());
+        container.setLayout(new GridLayout(10,1));
         container.add(label);
         container.add(input);
 
-
-
+        lblCurrentFile.setVerticalAlignment(JLabel.CENTER);
+        container.add(btnSelectFile);
+        container.add(lblCurrentFile);
 
         ButtonGroup isEncGroup = new ButtonGroup();
         Panel encOrDecPanel = new Panel(new GridLayout(1,2));
@@ -91,7 +104,7 @@ public class Lab1Frame extends JFrame {
         radioRailFence.setSelected(true);
         radioIsEncrypt.setSelected(true);
 
-
+        btnSelectFile.addActionListener(new SelectFile());
         button.addActionListener(new ButtonEventListener());
         container.add(button);
     }
@@ -101,6 +114,21 @@ public class Lab1Frame extends JFrame {
                 message,
                 title,
                 JOptionPane.PLAIN_MESSAGE);
+    }
+
+    class SelectFile implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            JFileChooser fileopen = new JFileChooser();
+            fileopen.setCurrentDirectory(new File(System.getProperty("user.dir")));
+            int ret = fileopen.showDialog(null, "OpenFile");
+            if (ret == JFileChooser.APPROVE_OPTION) {
+                File file = fileopen.getSelectedFile();
+                currentPath = file.getName();
+                lblCurrentFile.setText(file.getName());
+            }
+        }
     }
 
     class ButtonEventListener implements ActionListener {
@@ -113,7 +141,7 @@ public class Lab1Frame extends JFrame {
                 if (radioRailFence.isSelected()) {
                     String plaintext = onlyEng(readFile());
                     message += "Key is " + input.getText() + "\n";
-                    message += "Plaintext: " + plaintext + "\n";
+                    message += "Plaintext: " + trimStr(plaintext) + "\n";
                     message += "Language: English\n";
                     Cipher railFence = new RailFence();
                     try {
@@ -126,7 +154,7 @@ public class Lab1Frame extends JFrame {
                     message += "Key is " + onlyRus(input.getText()) + "\n";
                     message += "Language: Russian\n";
                     String plaintext = onlyRus(readFile());
-                    message += "Plaintext: " + plaintext + "\n";
+                    message += "Plaintext: " + trimStr(plaintext) + "\n";
                     Cipher vigener = new VigenerCipher();
                     try {
                         ciphertext = vigener.encode(plaintext, onlyRus(input.getText()));
@@ -136,7 +164,7 @@ public class Lab1Frame extends JFrame {
                     }
                 } else if (radioRoatingSquare.isSelected()) {
                     String plaintext = onlyEng(readFile());
-                    message += "Plaintext: " + plaintext + "\n";
+                    message += "Plaintext: " + trimStr(plaintext) + "\n";
                     message += "Language: English\n";
                     RotatingSquare rotatingSquare = new RotatingSquare();
                     try {
@@ -148,16 +176,16 @@ public class Lab1Frame extends JFrame {
 
                 }
                 writeFile(ciphertext);
-                message += "Ciphertext: " + ciphertext + "\n";
+                message += "Ciphertext: " + trimStr(ciphertext) + "\n";
             } else {
                 message += "Decrypted\n";
 
                 String plaintext = "";
 
                 if (radioRailFence.isSelected()) {
-                    message += "Key is " + onlyEng(input.getText()) + "\n";
+                    message += "Key is " + input.getText() + "\n";
                     String ciphertext = onlyEng(readFile());
-                    message += "Ciphertext: " + ciphertext + "\n";
+                    message += "Ciphertext: " + trimStr(ciphertext) + "\n";
                     message += "Language: English\n";
                     Cipher railFence = new RailFence();
                     try {
@@ -170,7 +198,7 @@ public class Lab1Frame extends JFrame {
                 } else if(radioVigener.isSelected()) {
                     message += "Key is " + onlyRus(input.getText()) + "\n";
                     String ciphertext = onlyRus(readFile());
-                    message += "Ciphertext: " + ciphertext + "\n";
+                    message += "Ciphertext: " + trimStr(ciphertext) + "\n";
                     message += "Language: Russian\n";
                     Cipher vigener = new VigenerCipher();
                     try {
@@ -181,7 +209,7 @@ public class Lab1Frame extends JFrame {
                     }
                 } else if (radioRoatingSquare.isSelected()) {
                     String ciphertext = onlyEng(readFile());
-                    message += "Ciphertext: " + ciphertext + "\n";
+                    message += "Ciphertext: " + trimStr(ciphertext) + "\n";
                     message += "Language: English\n";
                     RotatingSquare rotatingSquare = new RotatingSquare();
                     try {
@@ -193,7 +221,7 @@ public class Lab1Frame extends JFrame {
 
                 }
                 writeFile(plaintext);
-                message += "Plaintext: " + plaintext + "\n";
+                message += "Plaintext: " + trimStr(plaintext) + "\n";
             }
             dialogMSG(message, "Great!");
 
